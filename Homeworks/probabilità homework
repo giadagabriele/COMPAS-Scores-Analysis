@@ -1,0 +1,125 @@
+PRE-PROCESSING (es1)
+
+E(S,parliament) = -p(sport | parliament) * log p(sport | parliament) -p(politics | parliament) * log p(politics | parliament).
+=  (-0 * 0)*(-1 * 0) = 0
+
+p(sport | parliament)=0
+log(p(sport | parliament))=0
+p(politics | parliament)= 1
+log= 0
+
+
+___________________________________
+E(S,italian) = -p(sport | italian) * log p(sport | italian) -p(politics | italian) * log p(politics | italian).
+= (-0.33 * -1.60)*(-0.66 *-0.60) = 0.528 * 0.396 = 0.209088
+
+p(sport | italian) = 0.33
+log p(sport | italian)= -1.60
+p(politics | italian)= 0.66
+log p(politics | italian)= -0.60
+
+
+
+___________________________________
+E(S,loose) = -p(sport | loose) * log p(sport | loose) -p(politics | loose) * log p(politics | loose).
+= (-0.5*-1)*(-0.5*-1) = 0.5 * 0.5 = 0.25
+
+p(sport | loose)= 0.5
+log(p(sport | loose))= -1
+p(politics | loose)= 0.5
+log(p(politics | loose))= -1
+
+
+
+___________________________________
+E(S,win) = -p(sport | win) * log p(sport | win) -p(politics | win) * log p(politics | win).
+= (-0.5*-1)*(-0.5*-1) = 0.5 * 0.5 = 0.25
+
+p(sport | win)= 0.5
+log(p(sport | win))= -1
+p(politics | win)= 0.5
+log(p(politics | win))= -1
+
+
+___________________________________
+E(S,soccer) = -p(sport | soccer) * log p(sport | soccer) -p(politics | soccer) * log p(politics | soccer).
+= (-1*0)*(0*0) = 0
+
+p(sport | soccer)=1
+log(p(sport | soccer))= 0
+p(politics | soccer)= 0
+log(p(politics | soccer))= 0 #per convenzione
+
+
+___________________________________
+E(S,championship) = -p(sport | championship) * log p(sport | championship) -p(politics | championship) * log p(politics | championship).
+= (-1*0)*(0*0) = 0
+
+p(sport | championship)= 1
+log(p(sport | championship))= 0
+p(politics | championship)= 0
+log(p(politics | championship))= 0 	#per convenizone
+
+
+
+___________________________________
+E(S,government) = -p(sport | government) * log p(sport | government) -p(politics | government) * log p(politics | government).
+= (0*0)*(-0.66*-0.60) = 0*0.396 = 0
+
+p(sport | government)= 0
+log(p(sport | government))= 0
+p(politics | government)= 0.66
+log(p(politics | government))= -0.60
+
+
+
+_________________________________________________________________________________________________________
+
+LEARNING (es2)
+
+per k=5:
+
+parliament
+soccer
+championship
+government
+italian
+
+P(c1)=(Wc1/|Voc|)=3/5=0.6
+P(c2)=(Wc2/|Voc|)=3/5=0.6
+
+p(w|c)= p(parliament|sport)= (d(w,c) + Wc)/d(c)+|Voc|= (0+3)/(3+5)= 0.375
+p(w|c)= p(parliament|politics)= (d(w,c) + Wc)/d(c)+|Voc|= (2+3)/(3+5)= 0.625
+
+p(w|c)= p(soccer|sport)= (d(w,c) + Wc)/d(c)+|Voc|= (2+3)/(3+5)= 0.625
+p(w|c)= p(soccer|politics)= (d(w,c) + Wc)/d(c)+|Voc|= (0+3)/(3+5)= 0.375
+
+p(w|c)= p(championship|sport)= (d(w,c) + Wc)/d(c)+|Voc|= (3+3)/(3+5)= 0.75
+p(w|c)= p(championship|politics)= (d(w,c) + Wc)/d(c)+|Voc|= (0+3)/(3+5)= 0.375
+
+p(w|c)= p(government|sport)= (d(w,c) + Wc)/d(c)+|Voc|= (1+3)/(3+5)= 0.5
+p(w|c)= p(government|politics)= (d(w,c) + Wc)/d(c)+|Voc|= (2+3)/(3+5)= 0.625
+
+p(w|c)= p(italian|sport)= (d(w,c) + Wc)/d(c)+|Voc|= (1+3)/(3+5)= 0.5
+p(w|c)= p(italian|politics)= (d(w,c) + Wc)/d(c)+|Voc|= (2+3)/(3+5)= 0.625
+
+
+_________________________________________________________________________________________________________
+
+CLASSIFICATION (es3)
+
+	parliament | italian | loose | win | soccer | championship | government | class				#NOTA CHE WIN E LOOSE NON DOVREBBERO PIU' ESISTERE NEL NOSTRO MODELLO ALLENATO!
+d1		0	   1		1	   0      1		  1			0	    ?
+d2		1	   1		0	   0	    1		  0			1	    ?
+
+d1 classification:
+p(sport|{italian , loose , soccer , championship})= p(sport)*p(italian|sport)*p(loose|sport)*p(soccer|sport)*p(championship|sport)= 0.6*0.5*0.625*0.75= 0.14
+p(politics|{italian , loose , soccer , championship})= p(politics)*p(italian|politics)*p(loose|politics)*p(soccer|politics)*p(championship|politics)= 0.4*0.625*0.375*0.375= 0.04
+
+d2 classification:
+p(sport|{parliament , italian , soccer , government})= p(sport)*p(parliament|sport)*p(italian|sport)*p(soccer|sport)*p(government|sport)= 0.6*0.375*0.5*0.625*0.5= 0.036
+p(politics|{parliament , italian , soccer , government})= p(politics)*p(parliament|politics)*p(italian|politics)*p(soccer|politics)*p(government|politics)= 0.4*0.625*0.625*0.375*0.625= 0.037 
+
+
+
+
